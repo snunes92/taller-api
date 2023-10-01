@@ -10,7 +10,7 @@ pokeballButton.addEventListener('click', () => {
     fetch('https://pokeapi.co/api/v2/pokemon')
         .then(response => response.json())
         .then(data => {
-            const randomPokemonNumber = Math.floor(Math.random() * data.count) + 1;
+            const randomPokemonNumber = Math.floor(Math.random() * data.count) + 1; // Genera un número aleatorio
             
             return fetch(`https://pokeapi.co/api/v2/pokemon/${randomPokemonNumber}`);
         })
