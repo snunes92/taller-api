@@ -1,0 +1,23 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+#pokeball-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+#pokeball-image {
+    width: 50px; 
+    height: 50px; 
+}
+
+.pokemon-info {
+    text-align: center;
+    margin-top: 20px; 
+}
