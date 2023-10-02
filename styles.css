@@ -17,7 +17,14 @@ body {
     height: 50px; 
 }
 
+#pokemon-name, #pokemon-number {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+
 .pokemon-info {
     text-align: center;
     margin-top: 20px; 
 }
+

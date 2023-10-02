@@ -1,3 +1,4 @@
+let pokemonShiny;
 const pokeballButton = document.getElementById('pokeball-button');
 const pokemonNumberElement = document.getElementById('pokemon-number');
 const pokemonNameElement = document.getElementById('pokemon-name');
@@ -10,8 +11,10 @@ pokeballButton.addEventListener('click', () => {
     fetch('https://pokeapi.co/api/v2/pokemon')
         .then(response => response.json())
         .then(data => {
-            const randomPokemonNumber = Math.floor(Math.random() * data.count) + 1; // Genera un número aleatorio
-            
+            // Genera un número aleatorio entre 1104 (total de pokemons en la api) y 1.
+            const randomPokemonNumber = Math.floor(Math.random() * (1104 - 1 + 1)) + 1;
+            // Genera un número aleatorio entre 2 y 1.
+            pokemonShiny = (1 === Math.floor(Math.random() * (2 - 1 + 1)) + 1);
             return fetch(`https://pokeapi.co/api/v2/pokemon/${randomPokemonNumber}`);
         })
         .then(response => response.json())
@@ -20,17 +23,28 @@ pokeballButton.addEventListener('click', () => {
             const pokemonName = data.name;
             const pokemonHeightDecimeters = data.height;
             const pokemonWeightHectograms = data.weight;
-            const pokemonImageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonNumber}.png`;
+            let pokemonImageUrl;
+
+            // Modifica el estilo y usa otra imagen dependiendo de la variable.
+            if (pokemonShiny === true) {
+                pokemonImageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${pokemonNumber}.png`;
+                pokemonNumberElement.style.color = 'blue';
+                pokemonNameElement.style.color = 'blue';
+            } else {
+                pokemonImageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonNumber}.png`;
+                pokemonNumberElement.style.color = '';
+                pokemonNameElement.style.color = '';
+            }
 
             // Convierte altura a metros y peso a kilogramos
             const pokemonHeightMeters = (pokemonHeightDecimeters / 10).toFixed(2);
             const pokemonWeightKilograms = (pokemonWeightHectograms / 10).toFixed(2);
 
             // Actualiza la información del Pokémon en la página con las unidades
-            pokemonNumberElement.textContent = pokemonNumber;
+            pokemonNumberElement.textContent = "N°" + pokemonNumber;
             pokemonNameElement.textContent = pokemonName;
-            pokemonHeightElement.textContent = `${pokemonHeightMeters} metros`;
-            pokemonWeightElement.textContent = `${pokemonWeightKilograms} kilogramos`;
+            pokemonHeightElement.textContent = `Altura: ${pokemonHeightMeters} metros`;
+            pokemonWeightElement.textContent = `Peso: ${pokemonWeightKilograms} kilogramos`;
             pokemonImageElement.src = pokemonImageUrl;
         })
         .catch(error => {
